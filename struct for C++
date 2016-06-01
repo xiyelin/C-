@@ -55,10 +55,27 @@
            详细讲解内存对齐的规则以及自定义内省所占存储空间的计算方法。
            
            
+        
+        
+        
+        5：C++中只有静态常量整型数据成员才能在struct内部初始化，C语言中不允许在struct内部进行初始化。
+        
+           例如：
+                    struct A
+                    {
+                        int x = 10;         //error C2864："A::X"：只有静态常量整型数据成员才可以在类型中初始化
+                    };
+                    
+                    struct B
+                    {
+                        static const int x = 10;              //ok
+                        static const int y = 20;              //ok
+                        static const double z = 1.2;          //error C2864："A::z"：只有静态常量整型成员才可以在类中初始化
+                    };
+                    
            
            
-           
-       5：C语言和C++语言中struct最大的不同在于：C语言中struct默认的访问限定为public；而C++中默认的访问限定为private;其次，在C语
+       6：C语言和C++语言中struct最大的不同在于：C语言中struct默认的访问限定为public；而C++中默认的访问限定为private;其次，在C语
            
            言struct中不能出现类的成员限定符，而且只能够封装数据，不能封装方法。而在C++中既可以使用访问限定符，又可以在struct中封
            
