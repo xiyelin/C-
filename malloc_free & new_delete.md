@@ -92,7 +92,7 @@
                     
                     
     8.operator new /operator delete的实现可以基于malloc，而malloc的实现不可以去调用new。
- ```cpp
+```cpp
  
             简单实现：
                         void * operator new (size_t size)
