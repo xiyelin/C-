@@ -142,8 +142,81 @@
 
 ```cpp
 
+        //这种引用计数把_a的前4个字节当做是_pRefCount，通过指针偏移和强制类型转换来改变引用计数
+        //减少了开辟空间的次数，和内存碎片
+        class String
+        {
+        public:
+        	String(const char* s = "")
+        		:_a(new char[strlen(s) + 5])
+        	{
+        		_a += 4;
+        		_GetRefCount(_a) = 1;
+        		strcpy(_a, s);
+        	}
+        	~String()
+        	{
+        		if (1 == _GetRefCount(_a))
+        		{
+        			_a -= 4;
+        			delete[] _a;
+        			_a = NULL;
+        		}
+        	}
+        	String(const String& s)
+        	{
+        		_a = s._a;
+        		++_GetRefCount(s._a);
+        	}
+        	String& operator=(const String& s)
+        	{
+        		if (this != &s)
+        		{
+        			if (1 == _GetRefCount(_a))
+        			{
+        				_a -= 4;
+        				delete[] _a;
+        				_a = NULL;
+        			}
+        
+        			_a = s._a;
+        			++(_GetRefCount(s._a));
+        		}
+        
+        		return *this;
+        	}
+        
+        	char& operator[](int index)                         //写时拷贝，在需要改变字符串内容的时候用
+        	{
+        		if (_GetRefCount(_a) > 1)
+        		{
+        			char* tmp = new char[strlen(_a) + 5];
+        			tmp += 4;
+        			strcpy(tmp, _a);
+        
+        			_GetRefCount(tmp) = 1;
+        			--_GetRefCount(_a);
+        
+        			_a = tmp;
+        		}
+        
+        		return _a[index];
+        	}
+        
+        protected:
+        	int& _GetRefCount(char* a)
+        	{
+        		assert(a);
+        
+        		return (*(int*)(a - 4));            //通过指针偏移和强转来取得_pRefCount的值
+        	}
+        
+        private:
+        	char* _a;
+        };
 
 
+```
     
 
 
