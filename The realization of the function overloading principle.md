@@ -181,7 +181,8 @@
 	
 	2.提升匹配：即整数提升（如bool 到 int、char到int、short 到int），float到double 
 	
-	3.使用标准转换匹配：如int 到double、double到int、double到long double、Derived*到Base*、T*到void*、int到unsigned int；
+	3.使用标准转换匹配：如int 到double、double到int、double到long double、Derived*到Base*、T*到void*、int
+						到unsigned int；
 	
 	4.使用用户自定义匹配；
 	
