@@ -77,6 +77,66 @@
 ![image](http://hbimg.b0.upaiyun.com/82bbe9f8a855ae25ae6e6e2d5dc0db95724b7b7512218-yZpxb9_fw658)
 
 <br>
+	
+	int Max(int a, int b)    					---->    _Z3Maxii
+	
+	double Max(double a, double b)				---->    _Z3Maxdd
+	
+	
+	函数签名规则： 返回值类型+函数名+参数类型
+	
+<br>
+<br>
+
+### 类的成员函数命名规则：
+
+```cpp
+		
+		# include <iostream>
+		using namespace std;
+		
+		class Compare
+		{
+		public:
+		    int Max(int a, int b)
+		    {
+		        cout << "int Max(int a, int b)" << endl;
+		
+		        return a > b ? a : b;
+		    }
+		
+		    double Max(double a, double b)
+		    {
+		        cout << "double Max(double a, double b)" << endl;
+		
+		        return a > b ? a : b;
+		    }
+		};
+		
+		
+		int main()
+		{
+		    Compare c;
+		
+		    cout << c.Max(2, 5) << endl;
+		    cout << c.Max(1.9, 9.9) << endl;
+		
+		    system("pause");
+		    return 0;
+		}
+		
+		
+```
+
+#### 类的成员函数的反汇编：
+
+![image](http://hbimg.b0.upaiyun.com/80cad2e56602bd5bfef3ec3b8571833c5ae0d92613436-N8pidX_fw658)
+
+<br>
+
+	
+
+	
 
 	
 	
