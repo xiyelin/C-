@@ -175,6 +175,25 @@
 
 ## 重载函数的调用匹配
 
+	重载函数的匹配步骤：
+	
+	1.精确匹配：参数匹配而不做转换，或者只是做微不足道的转换，如数组名到指针、函数名到指向函数的指针、T到const T； 
+	
+	2.提升匹配：即整数提升（如bool 到 int、char到int、short 到int），float到double 
+	
+	3.使用标准转换匹配：如int 到double、double到int、double到long double、Derived*到Base*、T*到void*、int到unsigned int；
+	
+	4.使用用户自定义匹配；
+	
+	5.使用省略号匹配：类似printf中省略号参数；
+	
+	注意：如果在最高层有多个匹配函数找到，调用将被拒绝（因为有歧义、模凌两可）。
+	
+<br>
+<br>
+
+## 编译器是如何解析重载函数调用的？
+
 	
 
 
