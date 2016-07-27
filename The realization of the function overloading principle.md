@@ -82,6 +82,7 @@
 	
 	double Max(double a, double b)				---->    _Z3Maxdd
 	
+	_Z后面的参数3代表返回值的类型，即整型为3，不同的编译器可能不同，本文用g++编译的；
 	
 	函数签名规则： 返回值类型+函数名+参数类型
 	
@@ -134,7 +135,49 @@
 
 <br>
 
+	int Max(int a, int b)                        ----> _ZN7Compare3MaxEii 
 	
+	double Max(double a, double b)               ----> _ZN7Compare3MaxEdd
+	
+	其中_Z后面的N7Compare代表作用域，3为返回值类型，后面为函数名和参数列表；
+	
+	成员函数签名规则： 作用域+返回值类型+函数名+参数列表
+	
+	
+<br>
+<br>
+
+### 为什么我们不把返回值类型考虑到函数重载中呢？
+
+
+	如果返回类型考虑到函数重载中，这样将不可能再独立于上下文决定调用哪个函数。
+	
+	这是为了保持解析操作符或函数调用时，独立于上下文（不依赖于上下文），看下面的例子：
+	
+```cpp
+		
+		float sqrt(float);
+		double sqrt(double);
+
+		void f(double da, float fla)
+		{
+		      float fl=sqrt(da);//调用sqrt(double)
+		      double d=sqrt(da);//调用sqrt(double)
+		
+		      fl=sqrt(fla);//调用sqrt(float)
+		   	  d=sqrt(fla);//调用sqrt(float)
+		}
+		
+		
+```
+
+<br>
+
+## 重载函数的调用匹配
+
+	
+
+
 
 	
 
