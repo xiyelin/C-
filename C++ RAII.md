@@ -157,6 +157,91 @@
 	
 ```cpp
 
+		template<class T>
+		class Scoped_Ptr
+		{
+		public:
+		    Scoped_Ptr(T *ptr)
+		        :_ptr(ptr)
+		    {}
+		    ~Scoped_Ptr()
+		    {
+		        delete _ptr;
+		        _ptr = NULL;
+		    }
+		
+		public:
+		    T& operator*()
+		    {
+		        return *_ptr;
+		    }
+		    T* operator->()
+		    {
+		        return _ptr;
+		    }
+		    T* GetPtr()
+		    {
+		        return _ptr;
+		    }
+		        
+		private:
+		    //只声明，不定义--->防拷贝
+		    //声明为私有，防止在类外定义
+		    Scoped_Ptr(Scoped_Ptr<T>& sp);
+		    Scoped_Ptr<T>& operator=(Scoped_Ptr<T>& sp);
+		
+		
+		private:
+		    T *_ptr;
+		};
+		
+		
+```
+
+<br>
+
+	No.3  scoped_array
+	
+```cpp
+
+		template<class T>
+		class Scoped_Array
+		{
+		public:
+		    Scoped_Array(T *ptr)
+		        :_ptr(ptr)
+		    {}
+		    ~Scoped_Array()
+		    {
+		        delete []_ptr;
+		        _ptr = NULL;
+		    }
+		
+		    T& operator[](size_t index)
+		    {
+		        return _ptr[index];
+		    }
+		
+		protected:
+		    Scoped_Array(const Scoped_Array& sa);
+		    Scoped_Array& operator=(const Scoped_Array& sa);
+		
+		private:
+		    T *_ptr;
+		};
+		
+		
+```
+
+<br>
+
+	No.4  shared_ptr
+
+```cpp
+
+		
+		
+		
 		
 		
 		
@@ -168,6 +253,21 @@
 		
 		
 ```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 	
