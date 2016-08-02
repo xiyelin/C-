@@ -321,6 +321,78 @@
 	
 ```cpp
 
+		template<class T>
+		class Shared_Array
+		{
+		public:
+		    Shared_Array(T *ptr)
+		        :_ptr(ptr)
+		        ,_pCount(new int(1))
+		    {}
+		    ~Shared_Array()
+		    {
+		        if (1 == *_pCount)
+		        {
+		            delete []_ptr;
+		            _ptr = NULL;
+		        }
+		
+		        --(*_pCount);
+		    }
+		    Shared_Array(const Shared_Array<T>& sp)
+		    {
+		        _ptr = sp._ptr;
+		        ++(*sp._pCount);
+		        _pCount = sp._pCount;
+		    }
+		    //常规写法
+		    Shared_Array<T>& operator=(const Shared_Array<T>& sp)
+		    {
+		        if (this != &sp)
+		        {
+		            if (NULL != _ptr)
+		            {
+		                if (*_pCount == 1)
+		                    delete _ptr;
+		                else
+		                    --(*_pCount);
+		            }
+		
+		            _ptr = sp._ptr;
+		            ++(*sp._pCount);
+		            _pCount = sp._pCount;
+		        }
+		
+		        return *this;
+		    }
+		    //现代写法
+		    //Shared_Array<T>& operator=(Shared_Array<T> sp)
+		    //{
+		    //    swap(_ptr, sp._ptr);
+		    //    swap(_pCount, sp._pCount);
+		
+		    //    return *this;
+		    //}
+		
+		    T& operator[](size_t index)
+		    {
+		        return _ptr[index];
+		    }
+		
+		private:
+		    T *_ptr;             //指针域
+		    int *_pCount;        //引用计数
+		};
+		
+		
+```
+
+<br>
+
+	No.6  week_ptr
+
+```cpp
+
 		
 		
 		
@@ -334,7 +406,50 @@
 
 <br>
 
+	No.7  intrusive_ptr
+
+```cpp
+
+		
+		
+		
+		
+		
+		
+		
+		
+```
+
+<br>
+
+	No.8  unique_ptr
+
+```cpp
 	
+	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+```
+
+<br>
+<br>
+
+
+
+
+
+
+
+
 
 
 
