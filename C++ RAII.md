@@ -153,7 +153,7 @@
 <br>
 
 
-	No.2  scoped_ptr
+	No.2  scoped_ptr：防拷贝
 	
 ```cpp
 
@@ -200,7 +200,7 @@
 
 <br>
 
-	No.3  scoped_array
+	No.3  scoped_array：防拷贝
 	
 ```cpp
 
@@ -235,8 +235,90 @@
 
 <br>
 
-	No.4  shared_ptr
+	No.4  shared_ptr：引用计数的方法
 
+```cpp
+
+		template<class T>
+		class Shared_Ptr
+		{
+		public:
+		    Shared_Ptr(T *ptr)
+		        :_ptr(ptr)
+		        ,_pCount(new int(1))
+		    {}
+		    ~Shared_Ptr()
+		    {
+		        if (1 == *_pCount)
+		        {
+		            delete _ptr;
+		            _ptr = NULL;
+		        }
+		
+		        --(*_pCount);
+		    }
+		    Shared_Ptr(const Shared_Ptr<T>& sp)
+		    {
+		        _ptr = sp._ptr;
+		        ++(*sp._pCount);
+		        _pCount = sp._pCount;
+		    }
+		    //常规写法
+		    Shared_Ptr<T>& operator=(const Shared_Ptr<T>& sp)
+		    {
+		        if (this != &sp)
+		        {
+		            if (NULL != _ptr)
+		            {
+		                if (*_pCount == 1)
+		                    delete _ptr;
+		                else
+		                    --(*_pCount);
+		            }
+		
+		            _ptr = sp._ptr;
+		            ++(*sp._pCount);
+		            _pCount = sp._pCount;
+		        }
+		
+		        return *this;
+		    }
+		    //现代写法
+		    //Shared_Ptr<T>& operator=(Shared_Ptr<T> sp)
+		    //{
+		    //    swap(_ptr, sp._ptr);
+		    //    swap(_pCount, sp._pCount);
+		
+		    //    return *this;
+		    //}
+		
+		public:
+		    T* operator*()
+		    {
+		        return *_ptr;
+		    }
+		    T& operator->()
+		    {
+		        return _ptr;
+		    }
+		    T& GetPtr()
+		    {
+		        return _ptr;
+		    }
+		
+		
+		private:
+		    T *_ptr;             //指针域
+		    int *_pCount;        //引用计数
+		};
+		
+		
+```
+
+<br>
+
+	No.5  shared_array
+	
 ```cpp
 
 		
@@ -248,13 +330,11 @@
 		
 		
 		
-		
-		
-		
-		
 ```
 
+<br>
 
+	
 
 
 
