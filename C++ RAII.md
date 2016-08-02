@@ -389,7 +389,7 @@
 
 <br>
 
-	No.6  week_ptr
+	No.6  weak_ptr
 
 ```cpp
 
