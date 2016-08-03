@@ -21,7 +21,7 @@
     (reference count)。智能指针类将一个计数器与类指向的对象相关联，引用计数跟踪该类有多少个对象共享同一指针。
 
 
-## 八大智能指针的简单实现：
+## 智能指针的简单实现：
 
 ![image](http://hbimg.b0.upaiyun.com/e154aff72d0d52c7c5f6e56cb3a68f2dc13057e4194a0-ACqqyf_fw658)
 
@@ -391,57 +391,41 @@
 
 	No.6  weak_ptr
 
-```cpp
-
-		
-		
-		
-		
-		
-		
-		
-		
-		
-```
-
-<br>
-
-	No.7  intrusive_ptr
-
-```cpp
-
-		
-		
-		
-		
-		
-		
-		
-		
-```
-
-<br>
-
-	No.8  unique_ptr
-
-```cpp
+	weak_ptr是为了配合shared_ptr而引入的一种智能指针，它更像是shared_ptr的一个助手而不是智能指针，因为它不具有
+	普通指针的行为，没有重载operator*和->,它的最大作用在于协助shared_ptr工作。
 	
-	
-		
-		
-		
-		
-		
-		
-		
-		
+	1. expired() 用于检测所管理的对象是否已经释放；
+	2. lock() 用于获取所管理的对象的强引用指针；
+	3. 通过weak_ptr来打破shared_ptr的循环引用问题；weak_ptr没有共享资源，它的构造不会引起指针引用计数的增加；
+
+
+
+
+```cpp
+
+		template<typename T> 
+		class weak_ptr
+		{
+		 public:
+		     template <typename Y>
+		     weak_ptr(const shared_ptr<Y>& r);
+		 
+		     weak_ptr(const weak_ptr& r);
+		     
+		     ~weak_ptr();
+		 
+		     T* get() const; 
+		     bool expired() const; 
+		     shared_ptr<T> lock() const;
+		};
 		
 		
 		
 ```
 
 <br>
-<br>
+
+
 
 
 
